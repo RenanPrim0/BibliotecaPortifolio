@@ -19,25 +19,21 @@ public class Emprestimo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JoinColumn(name = "livro_id")
     @ManyToOne
-    @JoinColumn(name = "livro_id", nullable = false)
     private Livro livro;
 
+    @JoinColumn(name = "usuario_id")
     @ManyToOne
-    @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
 
-    @Column(name = "data_emprestimo", nullable = false)
     private LocalDate dataEmprestimo;
 
-    @Column(name = "data_devolucao_prevista", nullable = false)
     private LocalDate dataDevolucaoPrevista;
 
-    @Column(name = "data_devolucao_real")
     private LocalDate dataDevolucaoReal;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private StatusEmprestimo status;
 
     @PrePersist

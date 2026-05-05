@@ -1,7 +1,6 @@
 package br.com.bibleoteca.Biblioteca_Portifolio.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,18 +17,10 @@ public class Autor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
-    @NotBlank(message = "Nome é obrigatório")
-    @Column(nullable = false)
+    private Long id;
     private String nome;
-
-    @Column(length = 500)
+    private Integer anoNascimento;
     private String biografia;
-
-    @Column(name = "ano_nascimento")
-    private int anoNascimento;
-
     @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL)
     private List<Livro> livros;
 }

@@ -1,8 +1,12 @@
 package br.com.bibleoteca.Biblioteca_Portifolio.service;
 
-import br.com.bibleoteca.Biblioteca_Portifolio.model.Livro;
-import br.com.bibleoteca.Biblioteca_Portifolio.repository.LivroRepository;
+import br.com.bibleoteca.Biblioteca_Portifolio.dto.usuario.UsuarioAltRequest;
+import br.com.bibleoteca.Biblioteca_Portifolio.dto.usuario.UsuarioRequest;
+import br.com.bibleoteca.Biblioteca_Portifolio.dto.usuario.UsuarioResponse;
+import br.com.bibleoteca.Biblioteca_Portifolio.model.Usuario;
+import br.com.bibleoteca.Biblioteca_Portifolio.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,29 +15,44 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UsuarioService {
 
-    private final LivroRepository livroRepository;
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
-    public List<Livro> listarTodos() {
-        return livroRepository.findAll();
+    public UsuarioResponse salvar(UsuarioRequest request) {
+        Usuario usuario = new Usuario();
+        usuario.setNome(request.nome());
+        usuario.setEmail(request.email());
+        usuario.setCpf(request.cpf());
+        usuarioRepository.save(usuario);
+        return new UsuarioResponse(usuario);
     }
 
-    public Livro buscarPorId(Long id) {
-        return livroRepository.findById(id).orElseThrow(() -> new RuntimeException("Livro não encontrado"));
+    public List<UsuarioResponse> listarTodos() {
+        return usuarioRepository.findAll().stream()
+                .map(UsuarioResponse::new)
+                .toList();
     }
 
-    public Livro atualizar(Long id, Livro livroAtualizado) {
-        Livro livro = buscarPorId(id);
-        livro.setTitulo(livroAtualizado.getTitulo());
-        livro.setAutor(livroAtualizado.getAutor());
-        livro.setIsbn(livroAtualizado.getIsbn());
-        livro.setAnoPublicacao(livroAtualizado.getAnoPublicacao());
-        livro.setGenero(livroAtualizado.getGenero());
-        livro.setQuantidade(livroAtualizado.getQuantidade());
-        return livroRepository.save(livro);
+    public UsuarioResponse buscarPorId(Long id) {
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado" + id));
+        return new UsuarioResponse(usuario);
+    }
+
+    public UsuarioResponse atualizar(UsuarioAltRequest request) {
+        Usuario usuario = usuarioRepository.findById(request.id())
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado" + request.id()));
+        usuario.setNome(request.nome());
+        usuario.setEmail(request.email());
+        usuario.setCpf(request.cpf());
+        usuarioRepository.save(usuario);
+        return new UsuarioResponse(usuario);
     }
 
     public void deletar(Long id) {
-        buscarPorId(id);
-        livroRepository.deleteById(id);
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado" + id));
+        usuarioRepository.delete(usuario);
     }
-}
+
+}   

@@ -1,7 +1,6 @@
 package br.com.bibleoteca.Biblioteca_Portifolio.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,31 +20,23 @@ public class Livro {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Título é obrigatório")
-    @Column(nullable = false)
     private String titulo;
 
-    @NotBlank(message = "ISBN é obrigatório")
-    @Column(nullable = false, unique = true)
-    private String isbn;
-
-    @Column(name = "ano_publicação")
     private Integer anoPublicacao;
 
     @Enumerated(EnumType.STRING)
     private Genero genero;
 
-    @Column(nullable = false)
     private Integer quantidade;
 
     @ManyToOne
-    @JoinColumn(name = "autor_id", nullable = false)
+    @JoinColumn(name = "autor_id")
     private Autor autor;
 
     @OneToMany(mappedBy = "livro", cascade = CascadeType.ALL)
     private List<Emprestimo> emprestimos;
 
     public enum Genero {
-        FICÇÃO, FANTASIA, SUSPENSE, ROMANCE, BIOGRAFIA, HISTÓRIA
+        FICCAO, FANTASIA, SUSPENSE, ROMANCE, BIOGRAFIA, HISTORIA
     }
 }
