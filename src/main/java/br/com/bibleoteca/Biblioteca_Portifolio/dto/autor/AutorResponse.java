@@ -3,7 +3,7 @@ package br.com.bibleoteca.Biblioteca_Portifolio.dto.autor;
 import br.com.bibleoteca.Biblioteca_Portifolio.model.Autor;
 
 public record AutorResponse(
-    long id,
+    Long id,
     String nome,
     Integer anoNascimento,
     String biografia
