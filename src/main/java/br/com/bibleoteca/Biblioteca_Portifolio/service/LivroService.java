@@ -35,35 +35,35 @@ public class LivroService {
     }
 
    public LivroResponse criar(LivroRequest request) {
-    Livro livro = new Livro();
-    
-    Autor autor = autorRepository.findById(request.autorId())
-            .orElseThrow(() -> new RuntimeException("Autor não encontrado"));
+        Livro livro = new Livro();
+        
+        Autor autor = autorRepository.findById(request.autorId())
+                .orElseThrow(() -> new RuntimeException("Autor não encontrado"));
 
-    livro.setTitulo(request.titulo());
-    livro.setAutor(autor);
-    livro.setAnoPublicacao(request.anoPublicacao());
-    livro.setGenero(Livro.Genero.valueOf(request.genero()));
-    livro.setQuantidade(request.quantidade());
-    livroRepository.save(livro);
-    return new LivroResponse(livro);
-}
+        livro.setTitulo(request.titulo());
+        livro.setAutor(autor);
+        livro.setAnoPublicacao(request.anoPublicacao());
+        livro.setGenero(Livro.Genero.valueOf(request.genero()));
+        livro.setQuantidade(request.quantidade());
+        livroRepository.save(livro);
+        return new LivroResponse(livro);
+    }
 
     public LivroResponse atualizar(LivroAltRequest request) {
-    Livro livro = livroRepository.findById(request.id())
-            .orElseThrow(() -> new RuntimeException("Livro não encontrado"));
-    
-    Autor autor = autorRepository.findById(request.autorId())
-            .orElseThrow(() -> new RuntimeException("Autor não encontrado"));
+        Livro livro = livroRepository.findById(request.id())
+                .orElseThrow(() -> new RuntimeException("Livro não encontrado"));
+        
+        Autor autor = autorRepository.findById(request.autorId())
+                .orElseThrow(() -> new RuntimeException("Autor não encontrado"));
 
-    livro.setTitulo(request.titulo());
-    livro.setAutor(autor);
-    livro.setAnoPublicacao(request.anoPublicacao());
-    livro.setGenero(Livro.Genero.valueOf(request.genero()));
-    livro.setQuantidade(request.quantidade());
-    livroRepository.save(livro);
-    return new LivroResponse(livro);
-}
+        livro.setTitulo(request.titulo());
+        livro.setAutor(autor);
+        livro.setAnoPublicacao(request.anoPublicacao());
+        livro.setGenero(Livro.Genero.valueOf(request.genero()));
+        livro.setQuantidade(request.quantidade());
+        livroRepository.save(livro);
+        return new LivroResponse(livro);
+    }
 
     public void deletar(Long id) {
         buscarPorId(id);

@@ -5,14 +5,13 @@ import br.com.bibleoteca.Biblioteca_Portifolio.dto.usuario.UsuarioRequest;
 import br.com.bibleoteca.Biblioteca_Portifolio.dto.usuario.UsuarioResponse;
 import br.com.bibleoteca.Biblioteca_Portifolio.model.Usuario;
 import br.com.bibleoteca.Biblioteca_Portifolio.repository.UsuarioRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
+
 public class UsuarioService {
 
     @Autowired
@@ -45,6 +44,7 @@ public class UsuarioService {
         usuario.setNome(request.nome());
         usuario.setEmail(request.email());
         usuario.setCpf(request.cpf());
+        usuario.setStatus(request.status());
         usuarioRepository.save(usuario);
         return new UsuarioResponse(usuario);
     }
